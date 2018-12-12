@@ -4,12 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <title>Title</title>
+    <title>Travel Tracker</title>
+    <!--<script src="js/index1.js"></script>
+    <link rel="stylesheet" href="css/index1.css"> -->
     <style>
-
 body, html {
   height: 100%;
 }
+
+.bg {
+  /* The image used */
+  background-image: url("https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2018/07/05/105312566-1530803740357gettyimages-815863456.1910x1000.jpeg");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  background-color:#e0e5e5;
+
+}
+.responsive {
+  max-width: 100%;
+  height: auto;
+  float: left;
+}
+ .wrapper {vertical-align:top; }
+
+<div class="wrapper">
 
 .bg {
   /* The image used */
@@ -29,12 +63,12 @@ body, html {
 }
 
 #chartdiv {
-  width: 100%;
-  height: 98vh;
+  width: 75%;
+  height: 75vh;
 }
 #chartdivBL {
-  width: 100%;
-  height: 98vh;
+  width: 75%;
+  height: 75vh;
 
 }
 html { overflow-y: scroll; overflow-x:hidden; }
@@ -150,6 +184,20 @@ h1 {
   padding: 10px;
 }
 
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 900px) {
+  .column {
+    width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+
 .main {
     padding-left: 10px;
     padding-right: 10px;
@@ -160,6 +208,19 @@ h1 {
     background-color: #F7F6F6;
 }
 
+.fb-share-button1 {
+    background: #3b5998;
+    border-radius: 3px;
+    font-weight: 600;
+    padding: 5px 8px;
+    display: inline-block;
+    position: static;
+}
+
+
+#t_area{}
+
+#btn{}
     </style>
     <script src="https://www.amcharts.com/lib/4/core.js"></script>
 <script src="https://www.amcharts.com/lib/4/maps.js"></script>
@@ -179,11 +240,41 @@ h1 {
 
             var div1 = document.getElementById("chartdivBL");
             div1.style.display = "block";
+
+            renderBlOnLoad()
         }
     }
 </script>
+
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+
 </head>
-<body>
+<body >
+<!-- FB share including JS SDK -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=498067934018228&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!--   <header>
+      <a href="#home" class="logo" data-scroll>Travel Tracker</a>
+      <nav class="nav-collapse">
+        <ul>
+          <li class="menu-item active"><a href="#" data-scroll>Maps</a></li>
+          <li class="menu-item"><a href="#" data-scroll>Visited Details</a></li>
+          <li class="menu-item"><a href="#" data-scroll>Bucket List Details</a></li>
+        </ul>
+      </nav>
+    </header> -->
+
+
+
+
+
         <nav class="navbar navbar-dark bg-dark">
             <a class="navbar-brand" href="#">Travel Tracker</a>
             <ul class="nav" id="tabs">
@@ -200,6 +291,7 @@ h1 {
         </nav>
 
     <div class="main" id="chartContainer" style="display: block">
+
     <div style="font-family:Verdana, Geneva, sans-serif;padding: 15px;text-align:center;font-size: 15px;color: black;">
         <p1>Visited</p1>
         <label class="switch">
@@ -207,188 +299,58 @@ h1 {
             <span class="slider round"></span>
         </label>
         <p1>Bucket List</p1>
+
 	</div>
-        <div class="charts">
-        <div id="chartdiv" style="display: block"></div>
-    <div id="chartdivBL" style="display: none"> </div>
+
+
+
+        <div class="charts" style="background-color:#E4E4E4;"
+             class="fb-share-button" data-href="http://websys3.stern.nyu.edu/websysF18/websysF184/MyApp/www/"
+                  data-layout="button" data-size="large" data-mobile-iframe="true">
+            <div style="font-family:Verdana, Geneva, sans-serif;padding: 15px;text-align:center;font-size: 15px;color: white;">
+                <a target="_blank"
+                    class="fb-share-button1"
+                    href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwebsys3.stern.nyu.edu%2FwebsysF18%2FwebsysF184%2FMyApp%2Fwww%2F&amp;src=sdkpreparse"
+                    class="fb-xfbml-parse-ignore" style="color: white;">facebook Share</a>
+		</div>
+
+
+
+
+
+
+	</div>
+        <div id="chartdiv" style="display: block;top: 50%;
+  left: 15%;"></div>
+    <div id="chartdivBL" style="display: none ;top: 50%;
+  left: 15%;"> </div>
+
         </div>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Save Memory</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Illegal Selection</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-        </form>
+        <p id="modalWarning"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id= "savedMemory">Save memory</button>
       </div>
     </div>
   </div>
 </div>
-    </div>
 
-<!-- Portfolio Gallery Grid -->
-<div class="row" id="allMemory" style="display: none">
-  <div class="column nature">
-    <div class="content">
-      <img src="https://i.ytimg.com/vi/0lqN_v5ljlA/maxresdefault.jpg" alt="Mountains" style="width:100%">
-      <h4>Mountains</h4>
-      <p>Lorem ipsum dolor..</p>
-    </div>
-  </div>
-  <div class="column nature">
-    <div class="content">
-    <img src="https://i.ytimg.com/vi/0lqN_v5ljlA/maxresdefault.jpg" alt="Lights" style="width:100%">
-      <h4>Lights</h4>
-      <p>Lorem ipsum dolor..</p>
-    </div>
-  </div>
-  <div class="column nature">
-    <div class="content">
-    <img src="https://i.ytimg.com/vi/0lqN_v5ljlA/maxresdefault.jpg" alt="Nature" style="width:100%">
-      <h4>Forest</h4>
-      <p>Lorem ipsum dolor..</p>
-    </div>
-  </div>
+<div class="row" id="allMemory" style="display: none"></div>
 
-  <div class="column cars">
-    <div class="content">
-      <img src="https://i.ytimg.com/vi/0lqN_v5ljlA/maxresdefault.jpg" alt="Car" style="width:100%">
-      <h4>Retro</h4>
-      <p>Lorem ipsum dolor..</p>
-    </div>
-  </div>
-  <div class="column cars">
-    <div class="content">
-    <img src="https://i.ytimg.com/vi/0lqN_v5ljlA/maxresdefault.jpg" alt="Car" style="width:100%">
-      <h4>Fast</h4>
-      <p>Lorem ipsum dolor..</p>
-    </div>
-  </div>
-  <div class="column cars">
-    <div class="content">
-    <img src="https://i.ytimg.com/vi/0lqN_v5ljlA/maxresdefault.jpg" alt="Car" style="width:100%">
-      <h4>Classic</h4>
-      <p>Lorem ipsum dolor..</p>
-    </div>
-  </div>
-
-  <div class="column people">
-    <div class="content">
-      <img src="https://i.ytimg.com/vi/0lqN_v5ljlA/maxresdefault.jpg" alt="Car" style="width:100%">
-      <h4>Girl</h4>
-      <p>Lorem ipsum dolor..</p>
-    </div>
-  </div>
-  <div class="column people">
-    <div class="content">
-    <img src="https://i.ytimg.com/vi/0lqN_v5ljlA/maxresdefault.jpg" alt="Car" style="width:100%">
-      <h4>Man</h4>
-      <p>Lorem ipsum dolor..</p>
-    </div>
-  </div>
-  <div class="column people">
-    <div class="content">
-    <img src="https://i.ytimg.com/vi/0lqN_v5ljlA/maxresdefault.jpg" alt="Car" style="width:100%">
-      <h4>Woman</h4>
-      <p>Lorem ipsum dolor..</p>
-    </div>
-  </div>
-<!-- END GRID -->
+<div id="bucketListTable" style="display: none">
+    <div class="accordion" id="accordionExample"/>
 </div>
-
-        <div id="bucketListTable" style="display: none">
-            <table class="table table-striped">
-  <thead class="thead-light">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>
-          @abc
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
-
-            <div class="accordion" id="accordionExample">
-                <div class="card">
-    <div class="card-header" id="headingOne">
-      <h5 class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Collapsible Group Item #1
-        </button>
-      </h5>
-    </div>
-
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Collapsible Group Item #2
-        </button>
-      </h5>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Collapsible Group Item #3
-        </button>
-      </h5>
-    </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-</div>
-        </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -71,6 +71,7 @@ var legendTitle = legend.createChild(am4core.Label);
 legendTitle.text = "Legend:";
 
 var SC = [];
+var codes = [];
 
 //https://stackoverflow.com/questions/3954438/how-to-remove-item-from-array-by-value
 function removeA(arr) {
@@ -88,43 +89,25 @@ function removeA(arr) {
 // Create an event to toggle "active" state
 polygonTemplate.events.on("hit", function(ev) {
 
-  if (SC.includes(ev.target.dataItem.dataContext.id))
+  if (SC.includes(ev.target.dataItem.dataContext.name))
   {
-  removeA(SC,ev.target.dataItem.dataContext.id)
+  removeA(SC,ev.target.dataItem.dataContext.name)
+  removeA(codes,ev.target.dataItem.dataContext.id)
   ev.target.isActive = !ev.target.isActive;
   colV = ""
-
-    }else{
-    ev.target.isActive = !ev.target.isActive;
-    //var cat = prompt("Please enter category: Visited or BucketList");
-
-/*if (cat == null || cat == "") {
-  txt = "User cancelled the prompt.";
-} else if(cat == "Visited") {
-  colV = "#339933"
-  //console.log(ev.target.states.getKey("visited"))
-  ev.target.setState("active");
-  console.log(ev.target.states.getKey("active"));
-} else if(cat == "BucketList") {
-   colV = "#ff9933"
-   //console.log(ev.target.getKey("default"));
-   ev.target.setState("bucket");
-   console.log(ev.target.states.getKey("bucket"));
-}*/
-   //ev.target.isActive = !ev.target.isActive;
-
-  SC.push(ev.target.dataItem.dataContext.id);
-  document.getElementById("exampleModalLabel").innerHTML = "Save Memory: " + ev.target.dataItem.dataContext.name;
-  $('#exampleModal').modal('show');
-
+  $(`#visited-${ev.target.dataItem.dataContext.name}`).remove()
+  localStorage.removeItem(`v:${ev.target.dataItem.dataContext.name}`)
+  localStorage.removeItem(`code:${ev.target.dataItem.dataContext.id}`)
+    } else {
+    if (!SCBL.includes(ev.target.dataItem.dataContext.name)){
+        ev.target.isActive = !ev.target.isActive;
+        SC.push(ev.target.dataItem.dataContext.name);
+        codes.push(ev.target.dataItem.dataContext.id);
+        renderVisitedList()
+    } else {
+        duplicateCountry(ev.target.dataItem.dataContext.name)
+    }
   };
-  console.log(SC);
-
-
-
-  //console.log("Series name: ", ev.target.series.name);
-  //console.log("Country ISO2 id: ", ev.target.dataItem.dataContext.id);
- // console.log("Country ISO2 name: ", ev.target.dataItem.dataContext.name);
 });
 
 // Create a zoom control
@@ -217,55 +200,27 @@ legendTitleBL.text = "Legend:";
 
 var SCBL = [];
 
-//https://stackoverflow.com/questions/3954438/how-to-remove-item-from-array-by-value
-function removeA(arr) {
-    var what, a = arguments, L = a.length, ax;
-    while (L > 1 && arr.length) {
-        what = a[--L];
-        while ((ax= arr.indexOf(what)) !== -1) {
-            arr.splice(ax, 1);
-        }
-    }
-    return arr;
-}
-
 // Create an event to toggle "active" state
 polygonTemplateBL.events.on("hit", function(ev) {
 
-  if (SCBL.includes(ev.target.dataItem.dataContext.id))
+  if (SCBL.includes(ev.target.dataItem.dataContext.name))
   {
-  removeA(SCBL,ev.target.dataItem.dataContext.id)
+  removeA(SCBL,ev.target.dataItem.dataContext.name)
   ev.target.isActive = !ev.target.isActive;
   colV = ""
-
+  $(`#bl-${ev.target.dataItem.dataContext.name}`).remove()
+  localStorage.removeItem(`bl:${ev.target.dataItem.dataContext.name}`)
     }else{
-    ev.target.isActive = !ev.target.isActive;
-    //var cat = prompt("Please enter category: Visited or BucketList");
-
-/*if (cat == null || cat == "") {
-  txt = "User cancelled the prompt.";
-} else if(cat == "Visited") {
-  colV = "#339933"
-  //console.log(ev.target.states.getKey("visited"))
-  ev.target.setState("active");
-  console.log(ev.target.states.getKey("active"));
-} else if(cat == "BucketList") {
-   colV = "#ff9933"
-   //console.log(ev.target.getKey("default"));
-   ev.target.setState("bucket");
-   console.log(ev.target.states.getKey("bucket"));
-}*/
-   //ev.target.isActive = !ev.target.isActive;
-
-  SCBL.push(ev.target.dataItem.dataContext.id);
-  };
-  console.log(SCBL);
-
-
-  //console.log("Series name: ", ev.target.series.name);
-  //console.log("Country ISO2 id: ", ev.target.dataItem.dataContext.id);
- // console.log("Country ISO2 name: ", ev.target.dataItem.dataContext.name);
-});
+    if (!SC.includes(ev.target.dataItem.dataContext.name)){
+        ev.target.isActive = !ev.target.isActive;
+        SCBL.push(ev.target.dataItem.dataContext.name);
+        renderBucketLists()
+    } else {
+        $('#exampleModal').modal('show')
+        duplicateCountry(ev.target.dataItem.dataContext.name)
+   }
+   }
+  });
 
 // Create a zoom control
 var zoomControlBL = new am4maps.ZoomControl();
@@ -285,14 +240,13 @@ homeBL.events.on("hit", function(ev) {
 
 var memoryDict = {}
 
-$( "#savedMemory" ).click(function() {
-    var tempKey = document.getElementById("exampleModalLabel").innerHTML
-    var key = tempKey.substring(tempKey.indexOf(':') + 1).trim()
-    memoryDict[key] = document.getElementById("message-text").value
-    console.log(memoryDict)
-    document.getElementById("message-text").value = ""
-    $('#exampleModal').modal('hide')
-});
+function duplicateCountry(countryName) {
+    var msg = document.getElementById("modalWarning").innerHTML
+    var section =document.getElementById("toggleSwitch").checked ? "Visited" : "Bucket List"
+    document.getElementById("modalWarning").innerHTML = `<p> ${countryName} already added in ${section} section !</p>`
+    $('#exampleModal').modal('show')
+}
+
 
 $("#showMemories").click(function() {
     document.getElementById("chartdiv").style.display = "none";
@@ -326,4 +280,159 @@ $('#tabs li:last-child a').on('click', function (e) {
   document.getElementById("allMemory").style.display = "none";
   document.getElementById("bucketListTable").style.display = "block";
 })
+
+/**** Dynamic construction of Visited ****/
+function renderVisitedList() {
+    var countryCode = codes[codes.length - 1].toLowerCase()
+    var lastElement = SC[SC.length - 1]
+    lastElement = lastElement.trim().split(" ").join("_");
+    var visitedDiv = `<div class="column ${lastElement}" id="visited-${lastElement}">
+                        <div class="content">
+                            <img src="https://lipis.github.io/flag-icon-css/flags/4x3/${countryCode}.svg" style="display: block;  margin-left: auto;margin-right: auto;  width: 50%;">
+                            </br>
+                            <h4 style="text-align:center;">${lastElement}</h4>
+                            <div id="editDiv">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="text-area-visited-${lastElement}" rows="2"  placeholder="Enter memory..."></textarea>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <button type="button" class="btn btn-primary" id="saveMemory">Save for ${lastElement}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`
+    $('#allMemory').append(visitedDiv);
+    var key1 = "code:" + lastElement
+    localStorage.setItem(key1, countryCode);
+}
+
+//var memoryDict = {}
+$("#allMemory").on("click", "button#saveMemory", function(){
+    var btnName = $(this).text()
+    var key = btnName.substring(btnName.indexOf('for')+3).trim()
+    var content = document.getElementById(`text-area-visited-${key}`).value
+    var key1 = "v:" + key
+    localStorage.setItem(key1, content);
+    //memoryDict[key] = content
+    //console.log(memoryDict)
+});
+
+/**** Dynamic construction of BucketList ****/
+function renderBucketLists() {
+    var lastElement = SCBL[SCBL.length-1]
+    lastElement = lastElement.trim().split(" ").join("_");
+    var firstDivStart = `<div class="card" id="bl-${lastElement}">`
+    var cardHeader = `<div class="card-header" id="heading-${lastElement}">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-${lastElement}" aria-expanded="false" aria-controls="collapse-${lastElement}">
+                                ${lastElement}
+                            </button>
+                        </h5>
+                     </div>`
+    var innerDiv = `<div id="collapse-${lastElement}" class="collapse" aria-labelledby="heading-${lastElement}" data-parent="#accordionExample">
+                       <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="text-area-${lastElement}">Enter any notes about this bucket list location:</label>
+                                <textarea class="form-control" id="text-area-${lastElement}" rows="2"  placeholder="Enter notes..."></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-sm" id="save">Save for ${lastElement}</button>
+                        </form>
+                            <div id="skyscanner-${lastElement}"></div>
+                       </div>
+                   </div>`
+    var firstDivClose = `</div>`
+    //var divElem = '<div>' + lastElement + '</div>'
+    $('#accordionExample').append(firstDivStart + cardHeader + innerDiv + firstDivClose);
+
+    var skyscannerDiv = `   <meta name="originLocation" content="New York" />
+                            <div data-skyscanner-widget="SearchWidget" data-origin-name="document.querySelector('meta[name=originLocation]').content" data-destination-name="'${lastElement}'"></div>
+                            <script src="https://widgets.skyscanner.net/widget-server/js/loader.js" async></script>`
+    $(`#skyscanner-${lastElement}`).append(skyscannerDiv);
+    loadSkyScannerScript()
+
+}
+
+function loadSkyScannerScript() {
+       var dynamicScripts = ["https://widgets.skyscanner.net/widget-server/js/loader.js"];
+
+        for (var i = 0; i < dynamicScripts.length; i++) {
+            let node = document.createElement('script');
+            node.src = dynamicScripts [i];
+            node.type = 'text/javascript';
+            node.async = false;
+            node.charset = 'utf-8';
+            document.getElementsByTagName('head')[0].appendChild(node);
+        }
+}
+
+//var blDict = {}
+$("#accordionExample").on("click", "button#save", function(){
+    var btnName = $(this).text()
+    var key = btnName.substring(btnName.indexOf('for')+3).trim()
+    var content = document.getElementById(`text-area-${key}`).value
+    //blDict[key] = content
+    var key1 = "bl:" + key
+    localStorage.setItem(key1, content);
+});
+
+/****On load ***/
+$( document ).ready(function() {
+    console.log( "ready!" );
+    //deleteLocalStorage()
+    for (key in localStorage) {
+        console.log("ready: " + key)
+        if (key.includes("v:")) {
+            var name = key.split("v:")[1]
+            SC.push(name)
+            codes.push(localStorage.getItem("code:" + name))
+            renderVisitedList()
+        } else if (key.includes("bl:")) {
+            SCBL.push(key.split("bl:")[1])
+            renderBucketLists()
+        }
+    }
+
+    renderVisitedOnLoad()
+    renderBlOnLoad()
+});
+
+function renderVisitedOnLoad() {
+    for (key in polygonSeries.mapPolygons.values) {
+        var countryName = polygonSeries.mapPolygons.values[key].dataItem.dataContext.name
+        countryName = countryName.trim().split(" ").join("_");
+        if(SC.includes(countryName)){
+            polygonSeries.mapPolygons.values[key].isActive = true
+        }
+    }
+
+    for (key in SC) {
+        if (localStorage.getItem("v:" + SC[key]) != null){
+            document.getElementById(`text-area-visited-${SC[key]}`).value = localStorage.getItem("v:" + SC[key])
+        }
+    }
+}
+
+function renderBlOnLoad() {
+    for (key in polygonSeriesBL.mapPolygons.values) {
+            var countryName = polygonSeriesBL.mapPolygons.values[key].dataItem.dataContext.name
+            countryName = countryName.trim().split(" ").join("_");
+            if(SCBL.includes(countryName)){
+                polygonSeriesBL.mapPolygons.values[key].isActive = true
+            }
+    }
+
+    for (key in SCBL) {
+        if (localStorage.getItem("bl:" + SCBL[key]) != null) {
+            document.getElementById(`text-area-${SCBL[key]}`).value = localStorage.getItem("bl:" + SCBL[key])
+        }
+    }
+}
+
+function deleteLocalStorage() {
+    for (key in localStorage) {
+        localStorage.removeItem(key)
+    }
+}
+
 
