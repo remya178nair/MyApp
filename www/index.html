@@ -12,6 +12,18 @@ body, html {
   height: 100%;
 }
 
+.img1 { background-image: url("https://www.telegraph.co.uk/content/dam/Travel/2017/December/mil%20cover-xlarge.jpg"); }
+
+.bg-image {
+  /* Full height */
+  height: 50%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .bg {
   /* The image used */
   background-image: url("https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2018/07/05/105312566-1530803740357gettyimages-815863456.1910x1000.jpeg");
@@ -25,7 +37,28 @@ body, html {
   background-size: cover;
 }
 
+#main-bg-set {
+ /*height: auto;*/
+ .img-fluid. max-width: 100%;
+ background-image: url("https://www.wns.co.za/Portals/0/Images/HeaderBanner/desktop/1087/53/travel_HD.jpg");
+}
 
+#chart-bg {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  font-size: 80px;
+  border: 10px solid #f1f1f1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 300px;
+  padding: 20px;
+  text-align: center;
+}
 
 * {
   box-sizing: border-box;
@@ -63,11 +96,11 @@ body, html {
 }
 
 #chartdiv {
-  width: 75%;
+  width: 85%;
   height: 75vh;
 }
 #chartdivBL {
-  width: 75%;
+  width: 85%;
   height: 75vh;
 
 }
@@ -198,10 +231,6 @@ h1 {
   }
 }
 
-.main {
-    padding-left: 10px;
-    padding-right: 10px;
-}
 
 .charts {
     overflow: auto;
@@ -246,10 +275,9 @@ h1 {
     }
 </script>
 
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-
 </head>
-<body >
+<body id="main-bg-set">
+
 <!-- FB share including JS SDK -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -271,23 +299,24 @@ h1 {
       </nav>
     </header> -->
 
-
-
-
-
-        <nav class="navbar navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="#">Travel Tracker</a>
-            <ul class="nav" id="tabs">
-  <li class="nav-item">
-    <a class="nav-link active" href="#">Maps</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Visited Details</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Bucket List Details</a>
-  </li>
-</ul>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav" id="tabs">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Maps</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Visited Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Bucket List Details</a>
+      </li>
+    </ul>
+  </div>
         </nav>
 
     <div class="main" id="chartContainer" style="display: block">
@@ -307,24 +336,16 @@ h1 {
         <div class="charts" style="background-color:#E4E4E4;"
              class="fb-share-button" data-href="http://websys3.stern.nyu.edu/websysF18/websysF184/MyApp/www/"
                   data-layout="button" data-size="large" data-mobile-iframe="true">
-            <div style="font-family:Verdana, Geneva, sans-serif;padding: 15px;text-align:center;font-size: 15px;color: white;">
-                <a target="_blank"
-                    class="fb-share-button1"
-                    href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwebsys3.stern.nyu.edu%2FwebsysF18%2FwebsysF184%2FMyApp%2Fwww%2F&amp;src=sdkpreparse"
-                    class="fb-xfbml-parse-ignore" style="color: white;">facebook Share</a>
-		</div>
-
-
-
-
-
-
 	</div>
-        <div id="chartdiv" style="display: block;top: 50%;
-  left: 15%;"></div>
-    <div id="chartdivBL" style="display: none ;top: 50%;
-  left: 15%;"> </div>
+        <div id="chartdiv" style="display: block;left: 5%;"></div>
+    <div id="chartdivBL" style="display: none ;left: 5%;"> </div>
 
+        <div align="center">
+            <a target="_blank"
+                        class="fb-share-button1"
+                        href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwebsys3.stern.nyu.edu%2FwebsysF18%2FwebsysF184%2FMyApp%2Fwww%2F&amp;src=sdkpreparse"
+                        class="fb-xfbml-parse-ignore" style="color: white;">facebook Share</a>
+            </div>
         </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -346,14 +367,21 @@ h1 {
   </div>
 </div>
 
-<div class="row" id="allMemory" style="display: none"></div>
+<div class="row" id="allMemory" style="display: none">
+    <p class="lead text-center" id="warning-msg">
+        Goto "Maps" tab and click on the Map to add places you have visited. Then you can return to this tab to save your memories related to those places.
+    </p>
+</div>
 
 <div id="bucketListTable" style="display: none">
+    <p class="lead text-center" id="warning-msg-bl">
+        Goto "Maps" tab and toggle to "Bucket List" option. Then click on the Map to add places to your bucket list. Then you can return to this tab to check on deals and plan your trip to those places.
+    </p>
     <div class="accordion" id="accordionExample"/>
 </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="js/index.js"></script>

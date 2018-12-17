@@ -89,23 +89,30 @@ function removeA(arr) {
 // Create an event to toggle "active" state
 polygonTemplate.events.on("hit", function(ev) {
 
-  if (SC.includes(ev.target.dataItem.dataContext.name))
+  var modName = ev.target.dataItem.dataContext.name
+  modName = modName.trim().split(" ").join("_");
+  if (SC.includes(modName))
   {
-  removeA(SC,ev.target.dataItem.dataContext.name)
+  removeA(SC,modName)
   removeA(codes,ev.target.dataItem.dataContext.id)
   ev.target.isActive = !ev.target.isActive;
   colV = ""
-  $(`#visited-${ev.target.dataItem.dataContext.name}`).remove()
-  localStorage.removeItem(`v:${ev.target.dataItem.dataContext.name}`)
+  $(`#visited-${modName}`).remove()
+  localStorage.removeItem(`v:${modName}`)
   localStorage.removeItem(`code:${ev.target.dataItem.dataContext.id}`)
+  postMemory()
+    if(SC.length == 0) {
+        document.getElementById("warning-msg").style.display = "block"
+    }
     } else {
-    if (!SCBL.includes(ev.target.dataItem.dataContext.name)){
+    if (!SCBL.includes(modName)){
         ev.target.isActive = !ev.target.isActive;
-        SC.push(ev.target.dataItem.dataContext.name);
+        SC.push(modName);
         codes.push(ev.target.dataItem.dataContext.id);
         renderVisitedList()
+        document.getElementById("warning-msg").style.display = "none"
     } else {
-        duplicateCountry(ev.target.dataItem.dataContext.name)
+        duplicateCountry(modName)
     }
   };
 });
@@ -118,10 +125,25 @@ zoomControl.slider.height = 100;
 // Add button to zoom out
 var home = chart.chartContainer.createChild(am4core.Button);
 home.label.text = "Home";
-home.align = "left";
+home.align = "left  ";
+//home.padding(10, 15, 10, 15);
+//home.fillOpacity = 0.5;
+//home.fontSize = 15;
 home.events.on("hit", function(ev) {
   chart.goHome();
 });
+
+/*var button = chart.chartContainer.createChild(am4core.Button);
+button.padding(5, 5, 5, 5);
+button.width = 20;
+button.align = "left";
+button.marginRight = 15;
+button.events.on("hit", function() {
+  chart.goHome();
+});
+button.icon = new am4core.Sprite();
+button.icon.path = "M16,8 L14,8 L14,16 L10,16 L10,10 L6,10 L6,16 L2,16 L2,8 L0,8 L8,0 L16,8 Z M16,8";
+*/
 
 /****BUCKET LIST****/
 
@@ -166,7 +188,6 @@ bucketState.properties.fill = am4core.color("#ff9933");
 visitedState.properties.active = true;
 visitedState.properties.down = true;*/
 
-
 /* Add legend */
 var legendBL = new am4maps.Legend();
 legendBL.parent = chartBL.chartContainer;
@@ -203,21 +224,29 @@ var SCBL = [];
 // Create an event to toggle "active" state
 polygonTemplateBL.events.on("hit", function(ev) {
 
-  if (SCBL.includes(ev.target.dataItem.dataContext.name))
+  var modName = ev.target.dataItem.dataContext.name
+  modName = modName.trim().split(" ").join("_");
+  if (SCBL.includes(modName))
   {
-  removeA(SCBL,ev.target.dataItem.dataContext.name)
+  removeA(SCBL,modName)
   ev.target.isActive = !ev.target.isActive;
   colV = ""
-  $(`#bl-${ev.target.dataItem.dataContext.name}`).remove()
-  localStorage.removeItem(`bl:${ev.target.dataItem.dataContext.name}`)
+  $(`#bl-${modName}`).remove()
+  localStorage.removeItem(`bl:${modName}`)
+  postMemory()
+    if(SCBL.length == 0) {
+        document.getElementById("warning-msg-bl").style.display = "block"
+    }
+
     }else{
-    if (!SC.includes(ev.target.dataItem.dataContext.name)){
+    if (!SC.includes(modName)){
         ev.target.isActive = !ev.target.isActive;
-        SCBL.push(ev.target.dataItem.dataContext.name);
+        SCBL.push(modName);
         renderBucketLists()
+        document.getElementById("warning-msg-bl").style.display = "none"
     } else {
         $('#exampleModal').modal('show')
-        duplicateCountry(ev.target.dataItem.dataContext.name)
+        duplicateCountry(modName)
    }
    }
   });
@@ -235,6 +264,19 @@ homeBL.events.on("hit", function(ev) {
   chartBL.goHome();
 });
 
+/*var buttonBL = chartBL.chartContainer.createChild(am4core.Button);
+buttonBL.padding(5, 5, 5, 5);
+buttonBL.width = 20
+buttonBL.marginRight = 15
+buttonBL.height = 20
+buttonBL.align = "left";
+buttonBL.marginRight = 15;
+buttonBL.events.on("hit", function() {
+  chartBL.goHome();
+});
+buttonBL.icon = new am4core.Sprite();
+buttonBL.icon.path = "M16,8 L14,8 L14,16 L10,16 L10,10 L6,10 L6,16 L2,16 L2,8 L0,8 L8,0 L16,8 Z M16,8";
+*/
 
 /****Events****/
 
@@ -257,7 +299,9 @@ $("#showMemories").click(function() {
 $('#tabs li:first-child a').on('click', function (e) {
   e.preventDefault()
   console.log("1")
-  $(this).tab('show')
+  //$(this).tab('show')
+  $('li.active').removeClass('active');
+      $('this').addClass('active');
   document.getElementById("chartContainer").style.display = "block";
   document.getElementById("allMemory").style.display = "none";
   document.getElementById("bucketListTable").style.display = "none";
@@ -266,7 +310,9 @@ $('#tabs li:first-child a').on('click', function (e) {
 $('#tabs li:nth-child(2) a').on('click', function (e) {
   e.preventDefault()
   console.log("2")
-  $(this).tab('show')
+  //$(this).tab('show')
+      $('li.active').removeClass('active');
+      $('this').addClass('active');
    document.getElementById("chartContainer").style.display = "none";
    document.getElementById("allMemory").style.display = "block";
    document.getElementById("bucketListTable").style.display = "none";
@@ -274,8 +320,10 @@ $('#tabs li:nth-child(2) a').on('click', function (e) {
 
 $('#tabs li:last-child a').on('click', function (e) {
   e.preventDefault()
-  $(this).tab('show')
+  //$(this).tab('show')
   console.log("3")
+  $('li.active').removeClass('active');
+      $('this').addClass('active');
   document.getElementById("chartContainer").style.display = "none";
   document.getElementById("allMemory").style.display = "none";
   document.getElementById("bucketListTable").style.display = "block";
@@ -315,6 +363,7 @@ $("#allMemory").on("click", "button#saveMemory", function(){
     localStorage.setItem(key1, content);
     //memoryDict[key] = content
     //console.log(memoryDict)
+    postMemory()
 });
 
 /**** Dynamic construction of BucketList ****/
@@ -350,7 +399,6 @@ function renderBucketLists() {
                             <script src="https://widgets.skyscanner.net/widget-server/js/loader.js" async></script>`
     $(`#skyscanner-${lastElement}`).append(skyscannerDiv);
     loadSkyScannerScript()
-
 }
 
 function loadSkyScannerScript() {
@@ -374,30 +422,17 @@ $("#accordionExample").on("click", "button#save", function(){
     //blDict[key] = content
     var key1 = "bl:" + key
     localStorage.setItem(key1, content);
+    postMemory()
 });
 
 /****On load ***/
 $( document ).ready(function() {
     console.log( "ready!" );
     //deleteLocalStorage()
-    for (key in localStorage) {
-        console.log("ready: " + key)
-        if (key.includes("v:")) {
-            var name = key.split("v:")[1]
-            SC.push(name)
-            codes.push(localStorage.getItem("code:" + name))
-            renderVisitedList()
-        } else if (key.includes("bl:")) {
-            SCBL.push(key.split("bl:")[1])
-            renderBucketLists()
-        }
-    }
-
-    renderVisitedOnLoad()
-    renderBlOnLoad()
+    fetch()
 });
 
-function renderVisitedOnLoad() {
+function renderVisitedOnLoad(parsedJson) {
     for (key in polygonSeries.mapPolygons.values) {
         var countryName = polygonSeries.mapPolygons.values[key].dataItem.dataContext.name
         countryName = countryName.trim().split(" ").join("_");
@@ -407,13 +442,17 @@ function renderVisitedOnLoad() {
     }
 
     for (key in SC) {
-        if (localStorage.getItem("v:" + SC[key]) != null){
-            document.getElementById(`text-area-visited-${SC[key]}`).value = localStorage.getItem("v:" + SC[key])
+        if (parsedJson["v:" + SC[key]] != null){
+            document.getElementById(`text-area-visited-${SC[key]}`).value = parsedJson["v:" + SC[key]]
         }
+    }
+
+    if (SC.length > 0){
+        document.getElementById("warning-msg").style.display = "none"
     }
 }
 
-function renderBlOnLoad() {
+function renderBlOnLoad(parsedJson) {
     for (key in polygonSeriesBL.mapPolygons.values) {
             var countryName = polygonSeriesBL.mapPolygons.values[key].dataItem.dataContext.name
             countryName = countryName.trim().split(" ").join("_");
@@ -423,16 +462,74 @@ function renderBlOnLoad() {
     }
 
     for (key in SCBL) {
-        if (localStorage.getItem("bl:" + SCBL[key]) != null) {
+        if (parsedJson != null && parsedJson["bl:" + SCBL[key]] != null) {
+            document.getElementById(`text-area-${SCBL[key]}`).value = parsedJson["bl:" + SCBL[key]]
+        } else if (localStorage.getItem("bl:" + SCBL[key]) != null) {
             document.getElementById(`text-area-${SCBL[key]}`).value = localStorage.getItem("bl:" + SCBL[key])
         }
+    }
+
+     if (SCBL.length > 0){
+        document.getElementById("warning-msg-bl").style.display = "none"
     }
 }
 
 function deleteLocalStorage() {
     for (key in localStorage) {
-        localStorage.removeItem(key)
+        if (key != "username") {
+            localStorage.removeItem(key)
+        }
     }
 }
 
+/***Backend Calls****/
+function postMemory() {
+    var username = localStorage.getItem("username")
+    var json = JSON.stringify(localStorage).trim()
+    var loginString ="username="+username+"&payload="+json+"&save=";
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: "http://websys3.stern.nyu.edu/websysF18/websysF184/test.php",
+        data: loginString,
+        success: function(data){
+            if (data == "success") {
+                console.log("Succeeded!")
+            } else {
+                console.log(data)
+            }
+        }
+    });
+}
 
+function fetch() {
+    //var username = "remya@nyu.edu"
+    var username = localStorage.getItem("username")
+    var loginString ="username="+username+"&fetch=";
+    $.ajax({
+        type: "GET",crossDomain: true, cache: false,
+        url: "http://websys3.stern.nyu.edu/websysF18/websysF184/test.php",
+        data: loginString,
+        success: function(data){
+            if (data != "failed") {
+                var parsedJson = JSON.parse(data);
+                console.log(parsedJson)
+                for (key in parsedJson) {
+                    if (key.includes("v:")) {
+                        var name = key.split("v:")[1]
+                        SC.push(name)
+                        codes.push(parsedJson["code:" + name])
+                        renderVisitedList(parsedJson)
+                    } else if (key.includes("bl:")) {
+                        SCBL.push(key.split("bl:")[1])
+                    renderBucketLists(parsedJson)
+                    }
+            }
+
+            renderVisitedOnLoad(parsedJson)
+            renderBlOnLoad(parsedJson)
+            } else {
+                console.log("failed")
+            }
+        }
+    });
+}
