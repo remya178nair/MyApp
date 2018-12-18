@@ -318,7 +318,7 @@ $('#tabs li:nth-child(2) a').on('click', function (e) {
    document.getElementById("bucketListTable").style.display = "none";
 })
 
-$('#tabs li:last-child a').on('click', function (e) {
+$('#tabs li:nth-child(3) a').on('click', function (e) {
   e.preventDefault()
   //$(this).tab('show')
   console.log("3")
@@ -328,6 +328,11 @@ $('#tabs li:last-child a').on('click', function (e) {
   document.getElementById("allMemory").style.display = "none";
   document.getElementById("bucketListTable").style.display = "block";
 })
+
+$('#tabs li:last-child a').on('click', function (e) {
+  localStorage.removeItem("username")
+ $(location).attr('href', 'http://websys3.stern.nyu.edu/websysF18/websysF184/MyApp/www/index.html')
+});
 
 /**** Dynamic construction of Visited ****/
 function renderVisitedList() {
@@ -476,9 +481,9 @@ function renderBlOnLoad(parsedJson) {
 
 function deleteLocalStorage() {
     for (key in localStorage) {
-        if (key != "username") {
+        //if (key != "username") {
             localStorage.removeItem(key)
-        }
+        //}
     }
 }
 
@@ -489,7 +494,7 @@ function postMemory() {
     var loginString ="username="+username+"&payload="+json+"&save=";
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: "http://websys3.stern.nyu.edu/websysF18/websysF184/test.php",
+        url: "http://websys3.stern.nyu.edu/websysF18/websysF184/MyApp/www/php/update.php",
         data: loginString,
         success: function(data){
             if (data == "success") {
@@ -507,7 +512,7 @@ function fetch() {
     var loginString ="username="+username+"&fetch=";
     $.ajax({
         type: "GET",crossDomain: true, cache: false,
-        url: "http://websys3.stern.nyu.edu/websysF18/websysF184/test.php",
+        url: "http://websys3.stern.nyu.edu/websysF18/websysF184/MyApp/www/php/update.php",
         data: loginString,
         success: function(data){
             if (data != "failed") {

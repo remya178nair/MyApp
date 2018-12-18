@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Travel Tracker</title>
+    <!--<script src="js/index1.js"></script>
+    <link rel="stylesheet" href="css/index1.css"> -->
+    <style>
+body, html {
+  height: 100%;
+}
+
+.img1 { background-image: url("https://www.telegraph.co.uk/content/dam/Travel/2017/December/mil%20cover-xlarge.jpg"); }
+
+.bg-image {
+  /* Full height */
+  height: 50%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg {
+  /* The image used */
+  background-image: url("https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2018/07/05/105312566-1530803740357gettyimages-815863456.1910x1000.jpeg");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#main-bg-set {
+ /*height: auto;*/
+ .img-fluid. max-width: 100%;
+ background-image: url("https://www.wns.co.za/Portals/0/Images/HeaderBanner/desktop/1087/53/travel_HD.jpg");
+}
+
+#chart-bg {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  font-size: 80px;
+  border: 10px solid #f1f1f1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 300px;
+  padding: 20px;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  background-color:#e0e5e5;
+
+}
+.responsive {
+  max-width: 100%;
+  height: auto;
+  float: left;
+}
+ .wrapper {vertical-align:top; }
+
+<div class="wrapper">
+
+.bg {
+  /* The image used */
+  /*background-image: url("https://c1.staticflickr.com/5/4011/4550812850_10d35acb9e_b.jpg");*/
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#main {
+  margin: 100 auto;
+}
+
+#chartdiv {
+  width: 85%;
+  height: 70vh;
+}
+#chartdivBL {
+  width: 85%;
+  height: 70vh;
+
+}
+html { overflow-y: scroll; overflow-x:hidden; }
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+ background-color: #450301;
+    text-decoration: none;
+        padding: 15px 32px;
+        text-align: center;
+        color: white;
+    color: initial;
+        font-size: 16px;
+    margin: 4px 2px;
+        display: inline-block;
+    cursor: pointer;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+h1 {
+  font-size: 50px;
+  word-break: break-all;
+}
+
+.row {
+  margin: 10px -16px;
+}
+
+/* Add padding BETWEEN each column */
+.row,
+.row > .column {
+  padding: 8px;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+  background-color: #f1f1f1;
+  float: left;
+  width: 33.33%;
+  display: block; /* Hide all elements by default */
+}
+
+/* Clear floats after rows */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Content */
+.content {
+  background-color: white;
+  padding: 10px;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 900px) {
+  .column {
+    width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+
+
+.charts {
+    overflow: auto;
+    background-color: #F7F6F6;
+}
+
+.fb-share-button1 {
+    background: #3b5998;
+    border-radius: 3px;
+    font-weight: 600;
+    padding: 5px 8px;
+    display: inline-block;
+    position: static;
+}
+
+
+#t_area{}
+
+#btn{}
+    </style>
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/maps.js"></script>
+<script src="https://www.amcharts.com/lib/4/geodata/worldLow.js"></script>
+<script>
+    function handleClick(){
+        var chk=document.getElementById("toggleSwitch").checked;
+        if (!chk) {
+            var div = document.getElementById("chartdiv");
+            div.style.display = "block";
+
+            var div1 = document.getElementById("chartdivBL");
+            div1.style.display = "none";
+        } else {
+             var div = document.getElementById("chartdiv");
+            div.style.display = "none";
+
+            var div1 = document.getElementById("chartdivBL");
+            div1.style.display = "block";
+
+            renderBlOnLoad()
+        }
+    }
+   
+   function checkLogin(){
+      if(localStorage.getItem("username") == null){
+	 window.location.href =  "index.html";	
+	} else {
+		console.log("loggedin");
+	}
+   }
+</script>
+
+</head>
+<body  id="main-bg-set" onload="checkLogin()">
+
+<!-- FB share including JS SDK -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=498067934018228&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!--   <header>
+      <a href="#home" class="logo" data-scroll>Travel Tracker</a>
+      <nav class="nav-collapse">
+        <ul>
+          <li class="menu-item active"><a href="#" data-scroll>Maps</a></li>
+          <li class="menu-item"><a href="#" data-scroll>Visited Details</a></li>
+          <li class="menu-item"><a href="#" data-scroll>Bucket List Details</a></li>
+        </ul>
+      </nav>
+    </header> -->
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Travel Tracker</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav" id="tabs">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Maps</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Visited Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Bucket List Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Logout</a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+
+    <div class="main" id="chartContainer" style="display: block">
+
+    <div style="font-family:Verdana, Geneva, sans-serif;padding: 15px;text-align:center;font-size: 15px;color: black;">
+        <p1>Visited</p1>
+        <label class="switch">
+            <input type="checkbox" onclick='handleClick(this);' id="toggleSwitch" >
+            <span class="slider round"></span>
+        </label>
+        <p1>Bucket List</p1>
+
+	</div>
+
+
+
+        <div class="charts" style="background-color:#E4E4E4;"
+             class="fb-share-button" data-href="http://websys3.stern.nyu.edu/websysF18/websysF184/MyApp/www/"
+                  data-layout="button" data-size="large" data-mobile-iframe="true">
+	</div>
+        <div id="chartdiv" style="display: block;left: 5%;"></div>
+    <div id="chartdivBL" style="display: none ;left: 5%;"> </div>
+
+        <div align="center">
+            <a target="_blank"
+                        class="fb-share-button1"
+                        href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwebsys3.stern.nyu.edu%2FwebsysF18%2FwebsysF184%2FMyApp%2Fwww%2F&amp;src=sdkpreparse"
+                        class="fb-xfbml-parse-ignore" style="color: white;">facebook Share</a>
+            </div>
+        </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Illegal Selection</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="modalWarning"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" id="allMemory" style="display: none">
+    <p class="lead text-center" id="warning-msg">
+        Goto "Maps" tab and click on the Map to add places you have visited. Then you can return to this tab to save your memories related to those places.
+    </p>
+</div>
+
+<div id="bucketListTable" style="display: none">
+    <p class="lead text-center" id="warning-msg-bl">
+        Goto "Maps" tab and toggle to "Bucket List" option. Then click on the Map to add places to your bucket list. Then you can return to this tab to check on deals and plan your trip to those places.
+    </p>
+    <div class="accordion" id="accordionExample"/>
+</div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
