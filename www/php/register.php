@@ -26,17 +26,24 @@
     {                                           
         validate();                             #validate form fields   
 
-        if (! $msg)                             #if all required fields are entered
+        if (! $msg) {                            #if all required fields are entered
             read_data('check_unique');          #check to make sure the email is unique
-
-        if (! $msg && $mode == 'new'){          #if OK and mode=new
+	}else{
+	    header("Refresh: 0; url=http://websys3.stern.nyu.edu/websysF18/websysF184/MyApp/www/index.html");
+	echo $msg;
+	}
+        if (! $msg ){          #if OK and mode=new
             insert_data();                      #  register a new user
-        }
+            header("Location: http://websys3.stern.nyu.edu/websysF18/websysF184/MyApp/www/index.html");
+         } else {
+	header("Refresh: 0; url=http://websys3.stern.nyu.edu/websysF18/websysF184/MyApp/www/index.html");
+	echo $msg;
+}
     // header("Location: http://websys3.stern.nyu.edu/websysF18/websysF184/login.html");
 
     }
     
-    display();                                  #display the screen 
+   // display();                                  #display the screen 
 
 //=============================================================================
 // Validate all required input fields
@@ -161,7 +168,7 @@
         </div>
         </form>
         <div class="bg-text" style="font-size:20px; width:40%; top:94%; border: none">
-        <p> Already have an account? <a href="login.html">Login here!</a></p></div>
+        <p> Already have an account? <a href="http://websys3.stern.nyu.edu/websysF18/websysF184/MyApp/www/index.html">Login here!</a></p></div>
 
         </body>
         </html>
